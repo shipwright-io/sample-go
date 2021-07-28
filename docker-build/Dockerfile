@@ -1,6 +1,6 @@
 # From https://github.com/homeport/gonut/tree/master/assets/sample-apps/golang
 
-FROM golang:1.16 AS build
+FROM quay.io/shipwright-samples/golang:1.16 AS build
 
 COPY main.go .
 ENV CGO_ENABLED=0
