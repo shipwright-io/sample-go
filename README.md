@@ -19,3 +19,7 @@ This asset is intended to work with tools like [Kaniko](https://github.com/Googl
 
 Assets with pure source code, without any knowledge about Docker.
 This asset is intended to work with [Buildpacks](https://buildpacks.io/), like the [Paketo](https://paketo.io/) and [Heroku](https://www.heroku.com/) implementation.
+
+### `/source-build-with-package`
+
+Assets with `main.go` in another target (`/main-package`) rather than in source root. This asset is intended to work with [Buildpacks](https://buildpacks.io/), like the [Paketo](https://paketo.io/) and [Heroku](https://www.heroku.com/) implementation when we have [`BP_GO_TARGETS`](https://github.com/paketo-buildpacks/go-build#bp_go_targets) environment variable.
