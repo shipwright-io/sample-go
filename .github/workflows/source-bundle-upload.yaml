@@ -1,0 +1,66 @@
+---
+name: Source Bundle Upload
+
+on: 
+  push:
+    paths-ignore:
+    - 'LICENSE'
+    - 'OWNERS'
+    - 'README.md'
+    branches: 
+    - main
+
+jobs:
+  source-bundle-upload:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # To be able to get OIDC ID token to sign images.
+      packages: write  # To be able to push images and signatures.
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: sigstore/cosign-installer@v1.2.0
+    - uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup temporary Dockerfile for source bundle build
+      run: |
+        cat <<EOF >Dockerfile
+        FROM scratch
+        COPY . .
+        EOF
+
+        cat <<EOF >.dockerignore
+        .dockerignore
+        .git
+        .github
+        .shpignore
+        Dockerfile
+        LICENSE
+        OWNERS
+        README.md
+        EOF
+
+    - name: Build and push source bundle image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}/source-bundle:latest
+
+    - name: Sign source bundle image
+      env:
+        # This enables keyless mode
+        # (https://github.com/sigstore/cosign/blob/main/KEYLESS.md) which signs
+        # images using an ephemeral key tied to the GitHub Actions identity via
+        # OIDC.
+        COSIGN_EXPERIMENTAL: "true"
+      run: |
+        cosign sign \
+          -a sha=${{ github.sha }} \
+          -a run_id=${{ github.run_id }} \
+          -a run_attempt=${{ github.run_attempt }} \
+          ghcr.io/${{ github.repository }}/source-bundle:latest
