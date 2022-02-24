@@ -39,9 +39,6 @@ jobs:
         .github
         .shpignore
         Dockerfile
-        LICENSE
-        OWNERS
-        README.md
         EOF
 
     - name: Build and push source bundle image
