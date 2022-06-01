@@ -1,6 +1,6 @@
 # From https://github.com/homeport/gonut/tree/master/assets/sample-apps/golang
 
-# Must be set to 1.16
+# Must be set to a Go version that is available in our mirror namespace, e.g. 1.18
 ARG GO_VERSION
 
 FROM ghcr.io/shipwright-io/shipwright-samples/golang:${GO_VERSION} AS build
@@ -11,7 +11,6 @@ ARG MAIN
 COPY "${MAIN}" .
 ENV CGO_ENABLED=0
 RUN go build \
-    -tags netgo \
     -ldflags "-s -w -extldflags '-static'" \
     -o /tmp/helloworld \
     "${MAIN}"
