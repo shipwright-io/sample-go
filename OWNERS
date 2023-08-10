@@ -4,13 +4,17 @@ approvers:
 - adambkaplan
 - qu1queee
 - SaschaSchwarze0
-- sbose78
 
 reviewers:
 - adambkaplan
-- gabemontero
 - HeavyWombat
-- ImJasonH
 - otaviof
 - SaschaSchwarze0
+
+emeritus_approvers:
 - sbose78
+
+emeritus_reviewers:
+- sbose78
+- gabemontero
+- ImJasonH
