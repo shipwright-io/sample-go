@@ -1,13 +1,13 @@
 ---
 name: Source Bundle Upload
 
-on: 
+on:
   push:
     paths-ignore:
     - 'LICENSE'
     - 'OWNERS'
     - 'README.md'
-    branches: 
+    branches:
     - main
 
 jobs:
