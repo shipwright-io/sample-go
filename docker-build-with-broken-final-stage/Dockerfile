@@ -14,6 +14,6 @@ COPY --from=build /tmp/helloworld ./helloworld
 ENTRYPOINT [ "./helloworld" ]
 EXPOSE 8080
 
-# the following stage is INTENTIONALLY broken, one can only have a successful run when specifying final as target stage
+# the following stage is INTENTIONALLY broken, one can only have a successful run when specifying working-final as target stage
 FROM scratch
 RUN non-existing-command
